@@ -50,7 +50,7 @@ if __name__ == "__main__":
     os.makedirs(log_dir, exist_ok=True)
 
     #print("make environment")
-    env = gym.make('MountainCarContinuous-v0')
+    env = gym.make('single-valve-v0', flow_reference = 0.0001)
     env = Monitor(env, log_dir, allow_early_resets=True)
 
     #print("make learning model")
