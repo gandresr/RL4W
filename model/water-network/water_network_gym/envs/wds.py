@@ -19,7 +19,7 @@ class WDSEnv(gym.Env):
     def reset(self):
         self.valve.minor_loss = self.initial_setting
         results = self.sim.run_sim()
-        return results.node['demand']['N3']
+        return float(results.node['demand']['N3'])
 
     def step(self, action):
         self.valve.minor_loss = action
