@@ -2,8 +2,7 @@ import pickle
 import os
 from datetime import datetime
 
-def save_ppo_results(clip, gamma, lam, entcoeff, steps, xarr, yarr):
-    log_dir = "results/"
+def save_ppo_results(clip, gamma, lam, entcoeff, steps, xarr, yarr, log_dir='results/'):
     os.makedirs(log_dir, exist_ok=True)
 
     sim = {
@@ -17,7 +16,7 @@ def save_ppo_results(clip, gamma, lam, entcoeff, steps, xarr, yarr):
         'xarr' : xarr,
         'yarr' : yarr
     }
-    with open('results/'+timestamp_name('ppo', 'dat'), 'wb') as f:
+    with open(log_dir+timestamp_name('ppo', 'dat'), 'wb') as f:
         pickle.dump(sim, f)
 
 def timestamp_name(msg, extension):
