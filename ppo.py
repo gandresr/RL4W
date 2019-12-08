@@ -1,6 +1,7 @@
 import os
 
 import gym
+import water_network_gym
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -50,7 +51,7 @@ if __name__ == "__main__":
     os.makedirs(log_dir, exist_ok=True)
 
     #print("make environment")
-    env = gym.make('single-valve-v0', flow_reference = 0.0001)
+    env = gym.make('single-valve-v0', flow_reference = 0.001)
     env = Monitor(env, log_dir, allow_early_resets=True)
 
     #print("make learning model")
@@ -63,6 +64,7 @@ if __name__ == "__main__":
                  gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                  optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05)
     time_steps = 2e4
+    print(time_steps, 'HERE')
     model.learn(total_timesteps=int(time_steps), callback=callback)
 
     print("plotting ", xarr, yarr)

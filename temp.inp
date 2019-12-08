@@ -1,0 +1,133 @@
+; Filename: /home/watsup/Documents/Github/ReinforcementLearningWaterDistribution/model/water-network/water_network_gym/envs/WDS1.inp
+; WNTR: 0.2.1
+; Created: 2019-12-07 18:20:46
+[TITLE]
+
+[JUNCTIONS]
+;ID                      Elevation       Demand Pattern                 
+ N1                                 0               0                            ;
+ N2                                 0               0                            ;
+ N3                                 0               0                            ;
+
+[RESERVOIRS]
+;ID                                   Head                  Pattern
+ R1                               100                            ;
+
+[TANKS]
+;ID                              Elevation           Init Level            Min Level            Max Level             Diameter           Min Volume Volume Curve        
+
+[PIPES]
+;ID                   Node1                Node2                              Length             Diameter            Roughness           Minor Loss               Status
+ P1                   R1                   N1                              1000              12             100               0                 Open   ;
+ P2                   N2                   N3                              1000              12             100               0                 Open   ;
+
+[PUMPS]
+;ID                   Node1                Node2                Properties          
+
+[VALVES]
+;ID                   Node1                Node2                            Diameter Type              Setting           Minor Loss
+ V1                   N1                   N2                                12 TCV                0             100   ;
+
+[TAGS]
+;type      name       tag       
+
+[DEMANDS]
+;ID        Demand     Pattern   
+
+[STATUS]
+;ID        Setting   
+V1         Open      
+[PATTERNS]
+;ID        Multipliers
+
+[CURVES]
+;ID         X-Value      Y-Value     
+
+[CONTROLS]
+
+[RULES]
+
+[ENERGY]
+GLOBAL EFFICIENCY      75.0000
+GLOBAL PRICE           0.0000
+DEMAND CHARGE          0.0000
+
+[EMITTERS]
+;ID        Flow coefficient
+N3         100.0     
+
+[QUALITY]
+
+[SOURCES]
+;Node      Type       Quality    Pattern   
+
+[REACTIONS]
+;Type           Pipe/Tank               Coefficient
+
+ ORDER BULK 1
+ ORDER TANK 1
+ ORDER WALL 1
+ GLOBAL BULK 0.0000    
+ GLOBAL WALL 0.0000    
+ LIMITING POTENTIAL 0.0000    
+ ROUGHNESS CORRELATION 0.0000    
+
+[MIXING]
+;Tank ID             Model Fraction
+
+[TIMES]
+DURATION             00:00:00
+HYDRAULIC TIMESTEP   01:00:00
+QUALITY TIMESTEP     00:05:00
+PATTERN TIMESTEP     01:00:00
+PATTERN START        00:00:00
+REPORT TIMESTEP      01:00:00
+REPORT START         00:00:00
+START CLOCKTIME      00:00:00 AM
+STATISTIC            NONE      
+
+[REPORT]
+SUMMARY    NO
+PAGE       0
+
+[OPTIONS]
+UNITS                GPM                 
+HEADLOSS             H-W                 
+SPECIFIC GRAVITY     1
+VISCOSITY            1
+TRIALS               40
+ACCURACY             0.001
+CHECKFREQ            2
+MAXCHECK             10
+UNBALANCED           CONTINUE 10
+DEMAND MULTIPLIER    1
+EMITTER EXPONENT     0.5
+QUALITY              NONE                
+DIFFUSIVITY          1
+TOLERANCE            0.01
+
+[COORDINATES]
+;Node      X-Coord    Y-Coord   
+N1               1564.810000000       5796.300000000
+N2               2675.930000000       5777.780000000
+N3               4916.670000000       5777.780000000
+R1                453.700000000       5796.300000000
+
+[VERTICES]
+;Link      X-Coord    Y-Coord   
+
+[LABELS]
+ -46.30           5944.44          "R1"
+ 1435.19          6185.19          "N1"
+ 2546.30          6166.67          "N2"
+ 4787.04          6166.67          "N3"
+ 879.63           5759.26          "P1"
+ 1972.22          5611.11          "V1"
+ 3694.44          5703.70          "P2"
+
+[BACKDROP]
+DIMENSIONS    0.00    0.00    10000.00    10000.00
+UNITS    None
+OFFSET    0.00    0.00
+
+[END]

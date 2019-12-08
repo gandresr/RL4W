@@ -2,8 +2,7 @@ import gym
 import wntr
 import numpy as np
 
-from gym import error, spaces, utils
-from gym.utils import seeding
+from gym import error, spaces
 from pkg_resources import resource_filename
 
 class WDSEnv(gym.Env):
@@ -15,18 +14,22 @@ class WDSEnv(gym.Env):
         self.initial_setting = self.valve.minor_loss
         self.sim = wntr.sim.EpanetSimulator(self.wn)
         self.flow_reference = flow_reference
+        self.low = np.array([0])
+        self.high = np.array([np.inf])
+        self.observation_space = spaces.Box(low = self.low, high = self.high)
+        self.action_space = spaces.Box(low = self.low, high = self.high)
 
     def reset(self):
         self.valve.minor_loss = self.initial_setting
         results = self.sim.run_sim()
-        return float(results.node['demand']['N3'])
+        return np.array(float(results.node['demand']['N3']))
 
     def step(self, action):
-        self.valve.minor_loss = action
+        self.valve.minor_loss = action[0]
         results = self.sim.run_sim()
-        observation = results.node['demand']['N3']
-        reward = -abs(self.flow_reference - observation)
-        return float(observation), float(reward), False, None
+        observation = np.array(float(results.node['demand']['N3']))
+        reward = np.array(float(-abs(self.flow_reference - observation)))
+        return observation, reward, False, None
 
     def render(self, mode='human', close=False):
         pass
