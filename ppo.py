@@ -64,7 +64,6 @@ if __name__ == "__main__":
                  gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                  optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05)
     time_steps = 2e4
-    print(time_steps, 'HERE')
     model.learn(total_timesteps=int(time_steps), callback=callback)
 
     print("plotting ", xarr, yarr)
