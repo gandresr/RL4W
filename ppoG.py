@@ -87,7 +87,7 @@ if __name__ == "__main__":
             print("plotting ", xarr, yarr)
             xarr = np.array(xarr)
             yarr = np.array(yarr)
-            save_ppo_results(clip, gamma, lam, entcoeff, steps, xarr, yarr)
+            save_ppo_results(clip, gamma, lam, entcoeff, time_steps, xarr, yarr)
             y_smooth = gaussian_filter1d(yarr, sigma=2)
             plt.plot(xarr, yarr, 'b.')
             plt.plot(xarr, y_smooth, 'b-')
