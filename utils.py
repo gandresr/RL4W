@@ -1,7 +1,11 @@
 import pickle
+import os
 from datetime import datetime
 
 def save_ppo_results(clip, gamma, lam, entcoeff, steps, xarr, yarr):
+    log_dir = "results/"
+    os.makedirs(log_dir, exist_ok=True)
+
     sim = {
         'params' : {
             'clip' : clip,
