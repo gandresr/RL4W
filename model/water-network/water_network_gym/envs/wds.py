@@ -12,7 +12,7 @@ class WDSEnv(gym.Env):
         self.wn = wntr.network.WaterNetworkModel(inp_file)
         self.valve = self.wn.get_link('V1')
         self.initial_setting = self.valve.minor_loss
-        self.sim = wntr.sim.EpanetSimulator(self.wn)
+        self.sim = wntr.sim.WNTRSimulator(self.wn)
         self.flow_reference = flow_reference
         self.low = np.array([0])
         self.high = np.array([np.inf])
@@ -22,14 +22,16 @@ class WDSEnv(gym.Env):
     def reset(self):
         self.valve.minor_loss = self.initial_setting
         results = self.sim.run_sim()
-        return np.array(float(results.node['demand']['N3']))
+        return np.array([float(results.node['demand']['N3'])])
 
     def step(self, action):
+        assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
         self.valve.minor_loss = action[0]
         results = self.sim.run_sim()
-        observation = np.array(float(results.node['demand']['N3']))
-        reward = np.array(float(-abs(self.flow_reference - observation)))
-        return observation, reward, False, None
+        observation = np.array([float(results.node['demand']['N3'])])
+        reward = float(-abs(self.flow_reference - observation))
+        self.wn.reset_initial_values()
+        return observation, reward, False, {}
 
     def render(self, mode='human', close=False):
         pass

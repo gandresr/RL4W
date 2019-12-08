@@ -1,6 +1,6 @@
 ; Filename: /home/watsup/Documents/Github/ReinforcementLearningWaterDistribution/model/water-network/water_network_gym/envs/WDS1.inp
 ; WNTR: 0.2.1
-; Created: 2019-12-07 18:20:46
+; Created: 2019-12-07 19:05:55
 [TITLE]
 
 [JUNCTIONS]
@@ -26,7 +26,7 @@
 
 [VALVES]
 ;ID                   Node1                Node2                            Diameter Type              Setting           Minor Loss
- V1                   N1                   N2                                12 TCV                0             100   ;
+ V1                   N1                   N2                                12 TCV                0             978   ;
 
 [TAGS]
 ;type      name       tag       
