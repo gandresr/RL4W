@@ -17,11 +17,21 @@ def callback(_locals, _globals):
     :param _locals: (dict)
     :param _globals: (dict)
     """
-    global n_steps, best_mean_reward, xarr, yarr
-    x, y = ts2xy(load_results(log_dir), 'timesteps')
-    if len(x) > 0:
-        xarr = x
-        yarr = y
+    global env, xarr, yarr, n_before, n_now
+    episodic = False
+    if not episodic:
+        if env.rewards != None:
+            xarr.append(env.total_steps)
+            n_now = env.total_steps
+            yarr.append(sum(env.rewards[n_before:n_now]))
+            n_before = env.total_steps
+    else:
+    #global n_steps, best_mean_reward
+    #global xarr, yarr
+        x, y = ts2xy(load_results(log_dir), 'timesteps')
+        if len(x) > 0:
+            xarr = x
+            yarr = y
 
     # Print stats every 1000 calls
     #if (n_steps + 1) % 10 == 0:
@@ -52,6 +62,8 @@ if __name__ == "__main__":
 
     #print("make environment")
     env = gym.make('single-valve-v0', flow_reference = 0.001)
+    n_before = 0
+    n_now = 0
     env = Monitor(env, log_dir, allow_early_resets=True)
 
     #print("make learning model")
@@ -63,7 +75,7 @@ if __name__ == "__main__":
     model = PPO1(MlpPolicy, env, verbose=1, timesteps_per_actorbatch=actor_batch_size,
                  gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                  optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05)
-    time_steps = 2e4
+    time_steps = 5e4
     model.learn(total_timesteps=int(time_steps), callback=callback)
 
     print("plotting ", xarr, yarr)
