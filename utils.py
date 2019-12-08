@@ -13,9 +13,10 @@ def save_ppo_results(clip, gamma, lam, entcoeff, steps, xarr, yarr):
         'xarr' : xarr,
         'yarr' : yarr
     }
-    now = datetime.now()
-    pickle.dump(sim, 'results/' + timestamp_name('ppo', '.dat'))
+    with open('results/'+timestamp_name('ppo', 'dat'), 'wb') as f:
+        pickle.dump(sim, f)
 
 def timestamp_name(msg, extension):
+    now = datetime.now()
     return '{msg}_{date}.{ext}'.format(
-        msg = msg, date = str(now.strftime("%Y%m%dT%H_%M_%S"), ext = extension))
+        msg = msg, date = str(now.strftime("%Y%m%dT%H_%M_%S")), ext = extension)
