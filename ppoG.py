@@ -58,7 +58,7 @@ if __name__ == "__main__":
     lams = [0.1, 0.4, 0.8, 1]
     clips = [10, 100, 10000]
     entcoeffs = [10, 20, 50]
-    gammas = [0.1 0.95]
+    gammas = [0.1, 0.95]
     for clip in clips:
         for lam in lams:
             for entcoeff in entcoeffs:
