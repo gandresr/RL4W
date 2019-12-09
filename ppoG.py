@@ -81,7 +81,7 @@ if __name__ == "__main__":
                 model = PPO1(MlpPolicy, env, verbose=1, timesteps_per_actorbatch=actor_batch_size,
                             gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                             optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05,
-                            n_cpu_tf_sess = 12)
+                            n_cpu_tf_sess = 1)
                 time_steps = 10e3
 
                 model.learn(total_timesteps=int(time_steps), callback=callback)
