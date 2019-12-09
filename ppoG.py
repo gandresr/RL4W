@@ -55,8 +55,8 @@ def callback(_locals, _globals):
 
 if __name__ == "__main__":
 
-    clips = [0.75, 1, 1.5, 5, 10]
-    entcoeffs = [1, 5, 10, 100]
+    clips = [10, 20, 30, 40, 50]
+    entcoeffs = [10, 20, 30, 40, 50]
     for clip in clips:
         for entcoeff in entcoeffs:
             best_mean_reward, n_steps = -np.inf, 0
