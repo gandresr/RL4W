@@ -54,29 +54,29 @@ def callback(_locals, _globals):
     return True
 
 if __name__ == "__main__":
-    best_mean_reward, n_steps = -np.inf, 0
-    xarr = []
-    yarr = []
 
-    #print("start")
-    log_dir = "tmp/"
-    os.makedirs(log_dir, exist_ok=True)
-
-    #print("make environment")
-    env = gym.make('single-valve-v0', flow_reference = 0.1)
-    n_before = 0
-    n_now = 0
-    env = Monitor(env, log_dir, allow_early_resets=True)
-
-    #print("make learning model")
-    actor_batch_size = 256
-    gamma = 0.99
-    lam = 0.95
     clips = [0.01, 0.1, 0.5, 0.99]
     entcoeffs = [0.1, 1]
-
     for clip in clips:
         for entcoeff in entcoeffs:
+            best_mean_reward, n_steps = -np.inf, 0
+            yarr = []
+            xarr = []
+
+            #print("start")
+            log_dir = "tmp/"
+            os.makedirs(log_dir, exist_ok=True)
+
+            #print("make environment")
+            env = gym.make('single-valve-v0', flow_reference = 0.1)
+            n_before = 0
+            n_now = 0
+            env = Monitor(env, log_dir, allow_early_resets=True)
+
+            #print("make learning model")
+            actor_batch_size = 256
+            gamma = 0.99
+            lam = 0.95
             model = PPO1(MlpPolicy, env, verbose=1, timesteps_per_actorbatch=actor_batch_size,
                         gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                         optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05)
@@ -91,7 +91,8 @@ if __name__ == "__main__":
             y_smooth = gaussian_filter1d(yarr, sigma=2)
             plt.plot(xarr, yarr, 'b.')
             plt.plot(xarr, y_smooth, 'b-')
-            plt.title('PPO with eps = ' + str(clip) + ', batch size =' + str(actor_batch_size))
+            plt.title('PPO with eps = ' + str(clip) + ', ent_coeff =' + str(entcoeff))
             plt.xlabel('timesteps during learning')
             plt.ylabel('reward')
             plt.savefig('results/figures/' + timestamp_name('ppo', 'png'))
+            plt.clf()
