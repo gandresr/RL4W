@@ -94,7 +94,7 @@ if __name__ == "__main__":
                     y_smooth = gaussian_filter1d(yarr, sigma=2)
                     plt.plot(xarr, yarr, 'b.')
                     plt.plot(xarr, y_smooth, 'b-')
-                    plt.title('PPO with eps = ' + str(clip) + ', ent_coeff =' + str(entcoeff))
+                    plt.title('PPO with eps = ' + str(clip) + ', ent_coeff =' + str(entcoeff) + ', gamma =' + str(gamma))
                     plt.xlabel('timesteps during learning')
                     plt.ylabel('reward')
                     plt.savefig('results/figures/' + timestamp_name('ppo', 'png'))
