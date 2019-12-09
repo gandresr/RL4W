@@ -56,9 +56,9 @@ def callback(_locals, _globals):
 if __name__ == "__main__":
 
     lams = [0.1, 0.4, 0.8, 1]
-    clips = [10, 100, 10000]
-    entcoeffs = [10, 20, 50]
-    gammas = [0.1, 0.95]
+    clips = [15, 20, 25, 30]
+    entcoeffs = [10, 15, 20,30]
+    gammas = [0.01, 0.1]
     for clip in clips:
         for lam in lams:
             for entcoeff in entcoeffs:
