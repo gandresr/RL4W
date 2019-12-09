@@ -55,8 +55,8 @@ def callback(_locals, _globals):
 
 if __name__ == "__main__":
 
-    clips = [10, 20, 30, 40, 50]
-    entcoeffs = [10, 20, 30, 40, 50]
+    clips = [0.2, 0.4, 0.6, 0.8, 1]
+    entcoeffs = [10, 12, 14, 16, 18, 20]
     for clip in clips:
         for entcoeff in entcoeffs:
             best_mean_reward, n_steps = -np.inf, 0
@@ -75,11 +75,12 @@ if __name__ == "__main__":
 
             #print("make learning model")
             actor_batch_size = 256
-            gamma = 0.99
-            lam = 0.95
+            gamma = 0.001
+            lam = 0.99
             model = PPO1(MlpPolicy, env, verbose=1, timesteps_per_actorbatch=actor_batch_size,
                         gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
-                        optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05)
+                        optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05,
+                        n_cpu_tf_sess = 12)
             time_steps = 10e3
 
             model.learn(total_timesteps=int(time_steps), callback=callback)
