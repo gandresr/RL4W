@@ -31,7 +31,7 @@ class WDSEnv(gym.Env):
         self.valve.minor_loss = action[0]
         results = self.sim.run_sim()
         observation = np.array([float(results.link['flowrate']['P2'])])
-        reward = -1 if float(abs(self.flow_reference - observation)) > 0.1 else +1
+        reward = -1 if float(abs(self.flow_reference - observation)) > 0.001 else +1
         self.wn.reset_initial_values()
         return observation, reward, False, {}
 

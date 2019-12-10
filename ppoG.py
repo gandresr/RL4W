@@ -55,10 +55,10 @@ def callback(_locals, _globals):
 
 if __name__ == "__main__":
 
-    lams = [0.1, 0.4, 0.8, 1]
-    clips = [15, 20, 25, 30]
-    entcoeffs = [10, 15, 20,30]
-    gammas = [0.01, 0.1]
+    lams = [0.95]
+    clips = [0.4]
+    entcoeffs = [20]
+    gammas = [0.95]
     for clip in clips:
         for lam in lams:
             for entcoeff in entcoeffs:
@@ -72,7 +72,7 @@ if __name__ == "__main__":
                     os.makedirs(log_dir, exist_ok=True)
 
                     #print("make environment")
-                    env = gym.make('single-valve-v0', flow_reference = 0.165)
+                    env = gym.make('single-valve-v0', flow_reference = 0.17)
                     n_before = 0
                     n_now = 0
                     env = Monitor(env, log_dir, allow_early_resets=True)
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                     y_smooth = gaussian_filter1d(yarr, sigma=2)
                     plt.plot(xarr, yarr, 'b.')
                     plt.plot(xarr, y_smooth, 'b-')
-                    plt.title('PPO with eps = ' + str(clip) + ', ent_coeff =' + str(entcoeff) + ', gamma =' + str(gamma))
+                    plt.title('PPO r with eps = ' + str(clip) + ', ent_coeff =' + str(entcoeff) + ', gamma =' + str(gamma))
                     plt.xlabel('timesteps during learning')
                     plt.ylabel('reward')
                     plt.savefig('results/figures/' + timestamp_name('ppo', 'png'))
