@@ -9,8 +9,8 @@ from scipy.ndimage.filters import gaussian_filter1d
 
 if __name__ == "__main__":
     folder = 'results2/'
-    files = ['ppo_20191208T21_38_33.dat', 'ppo_20191208T22_06_38.dat'
-             ,'ppo_20191208T22_33_58.dat', 'ppo_20191208T23_00_16.dat']
+    files = ['ppo_20191209T17_24_26.dat', 'ppo_20191209T17_52_10.dat'
+             ,'ppo_20191209T18_21_12.dat', 'ppo_20191209T18_51_08.dat']
     data = []
     clip = []
     entcoeff = []
