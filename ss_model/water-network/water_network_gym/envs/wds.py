@@ -19,7 +19,8 @@ class WDSEnv(gym.Env):
         self.low = np.array([0])
         self.high = np.array([np.inf])
         self.observation_space = spaces.Box(low = self.low, high = self.high)
-        self.action_space = spaces.Box(low = self.low, high = self.high)
+        self.range_actions = np.arange(0, 1000, 10)
+        self.action_space = spaces.Discrete(len(self.range_actions))
 
     def reset(self):
         self.valve.minor_loss = self.initial_setting
@@ -28,7 +29,7 @@ class WDSEnv(gym.Env):
 
     def step(self, action):
         assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
-        self.valve.minor_loss = action[0]
+        self.valve.minor_loss = self.range_actions[action[0]]
         results = self.sim.run_sim()
         observation = np.array([float(results.node['head']['N3'])])
         reward = np.exp(-(self.pressure_reference - observation)**2/2)

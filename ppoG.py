@@ -55,10 +55,10 @@ def callback(_locals, _globals):
 
 if __name__ == "__main__":
 
-    lams = [0.1, 0.4, 0.8, 1]
-    clips = [15, 20, 25, 30]
-    entcoeffs = [10, 15, 20,30]
-    gammas = [0.01, 0.1]
+    lams = [0.9]
+    clips = [15]
+    entcoeffs = [15]
+    gammas = [0.95]
     for clip in clips:
         for lam in lams:
             for entcoeff in entcoeffs:
@@ -83,7 +83,7 @@ if __name__ == "__main__":
                                 gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                                 optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05,
                                 n_cpu_tf_sess = 1)
-                    time_steps = 10e3
+                    time_steps = 1e6
 
                     model.learn(total_timesteps=int(time_steps), callback=callback)
 
