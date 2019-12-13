@@ -68,7 +68,7 @@ if __name__ == "__main__":
     os.makedirs(log_dir, exist_ok=True)
 
     #print("make environment")
-    env = gym.make('single-valve-v0', flow_reference = 0.001)
+    env = gym.make('single-valve-v0', flow_reference = 0.1)
     #env = gym.make('MountainCarContinuous-v0')
     n_before = 0
     n_now = 0
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     model = PPO1(MlpPolicy, env, verbose=1, timesteps_per_actorbatch=actor_batch_size,
                  gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                  optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05)
-    time_steps = 2e4
+    time_steps = 1e6
     print(time_steps)
     model.learn(total_timesteps=int(time_steps), callback=callback)
 
