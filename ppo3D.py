@@ -68,7 +68,7 @@ if __name__ == "__main__":
     os.makedirs(log_dir, exist_ok=True)
 
     #print("make environment")
-    env = gym.make('single-valve-v0', flow_reference = 0.1)
+    env = gym.make('single-valve-v0', flow_reference = 0.14)
     #env = gym.make('MountainCarContinuous-v0')
     n_before = 0
     n_now = 0
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     model = PPO1(MlpPolicy, env, verbose=1, timesteps_per_actorbatch=actor_batch_size,
                  gamma = gamma, clip_param= clip, entcoeff=entcoeff, optim_epochs=4,
                  optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=1e-05)
-    time_steps = 1e6
+    time_steps = 2e4
     print(time_steps)
     model.learn(total_timesteps=int(time_steps), callback=callback)
 
@@ -96,14 +96,8 @@ if __name__ == "__main__":
     obs_max = np.amax(true_observation)
 
     prob_space = np.zeros((100,100))
-    action_space = np.arange(start=action_min, stop = action_max, step=(action_max - action_min)/100)
-    obs_space = np.arange(start=obs_min, stop = obs_max, step=(obs_max - obs_min)/100)
-
-    #scatter_action_space = []
-    #scatter_obs_space = []
-    #for i in range(100):
-    #    scatter_action_space =
-    #    scatter_obs_space =
+    action_space = np.linspace(action_min, action_max, 100)
+    obs_space = np.linspace(obs_min, obs_max, 100)
 
     for i in range(100):
         for j in range(100):
@@ -126,6 +120,7 @@ if __name__ == "__main__":
 
     #fig.show()
     plt.show()
+    plt.savefig('results3/figures/' + timestamp_name('ppo3D', 'png'))
 
     print("plotting ", xarr, yarr)
     #results_plotter.plot_results([log_dir], time_steps, results_plotter.X_TIMESTEPS, "PPO CartPole-v0")
