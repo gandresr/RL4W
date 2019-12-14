@@ -66,7 +66,7 @@ if __name__ == "__main__":
     lam = 0.95; gamma = 0.99
     entcoeffs = np.linspace(0, 0.01, 4)
 
-    control_type, reward_type, clip = argv[1:]
+    control_type, reward_type, clip = sys.argv[1:]
     clip = float(clip)
     if not control_type in ('flowrate', 'pressure',):
         raise ValueError("Control type not supported")
@@ -102,7 +102,7 @@ if __name__ == "__main__":
 
         #print("make learning model")
         actor_batch_size = 256
-        model = PPO1(MlpPolicy, env, verbose=0, timesteps_per_actorbatch=actor_batch_size,
+        model = PPO1(MlpPolicy, env, verbose=1, timesteps_per_actorbatch=actor_batch_size,
                     gamma = gamma, clip_param=clip, entcoeff=entcoeff, optim_epochs=4,
                     optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=3e-3,
                     n_cpu_tf_sess = 1)
