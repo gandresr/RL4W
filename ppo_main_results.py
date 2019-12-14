@@ -79,10 +79,8 @@ if __name__ == "__main__":
         ('pressure', 'gaussian', 0.2),
         ('pressure', 'gaussian', 0.3)]
 
-    comm = MPI.COMM_WORLD
-    rank = comm.Get_rank()
-    if rank != None:
-        control_type, reward_type, clip = combinations[rank]
+    for comb in combinations:
+        control_type, reward_type, clip = comb
         if not control_type in ('flowrate', 'pressure',):
             raise ValueError("Control type not supported")
         if not reward_type in ('gaussian', 'abs', 'delta',):
