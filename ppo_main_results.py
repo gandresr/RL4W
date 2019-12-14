@@ -65,80 +65,67 @@ def get_pi(true_observations, true_actions, model):
 if __name__ == "__main__":
     lam = 0.95; gamma = 0.99
     entcoeffs = np.linspace(0, 0.01, 4)
-    combinations = [
-        ('flowrate', 'abs', 0.1),
-        ('flowrate', 'abs', 0.2),
-        ('flowrate', 'abs', 0.3),
-        ('pressure', 'abs', 0.1),
-        ('pressure', 'abs', 0.2),
-        ('pressure', 'abs', 0.3),
-        ('flowrate', 'gaussian', 0.1),
-        ('flowrate', 'gaussian', 0.2),
-        ('flowrate', 'gaussian', 0.3),
-        ('pressure', 'gaussian', 0.1),
-        ('pressure', 'gaussian', 0.2),
-        ('pressure', 'gaussian', 0.3)]
 
-    for comb in combinations:
-        control_type, reward_type, clip = comb
-        if not control_type in ('flowrate', 'pressure',):
-            raise ValueError("Control type not supported")
-        if not reward_type in ('gaussian', 'abs', 'delta',):
-            raise ValueError("Reward type not supported")
+    control_type, reward_type, clip = argv[1:]
+    clip = float(clip)
+    if not control_type in ('flowrate', 'pressure',):
+        raise ValueError("Control type not supported")
+    if not reward_type in ('gaussian', 'abs', 'delta',):
+        raise ValueError("Reward type not supported")
 
-        if control_type == 'flowrate':
-            reference = 0.1
-        elif control_type == 'pressure':
-            reference = 10
+    if control_type == 'flowrate':
+        reference = 0.1
+    elif control_type == 'pressure':
+        reference = 10
 
-        for entcoeff in entcoeffs:
-            best_mean_reward, n_steps = -np.inf, 0
-            yarr = []; xarr = []
-            true_observations = []; true_actions = []
+    for entcoeff in entcoeffs:
+        best_mean_reward, n_steps = -np.inf, 0
+        yarr = []; xarr = []
+        true_observations = []; true_actions = []
 
-            #print("start")
-            log_dir = "tmp/"
-            fig_dir = ''.join(['main_results', os.sep, control_type, os.sep, reward_type])
-            os.makedirs(log_dir, exist_ok=True)
-            os.makedirs(fig_dir, exist_ok=True)
+        #print("start")
+        log_dir = "tmp/"
+        fig_dir = ''.join(['main_results', os.sep, control_type, os.sep, reward_type])
+        os.makedirs(log_dir, exist_ok=True)
+        os.makedirs(fig_dir, exist_ok=True)
 
-            #print("make environment")
-            env = gym.make(
-                'single-valve-v0',
-                reference = 0.1,
-                control_type = 'flowrate',
-                reward_type = 'abs')
+        #print("make environment")
+        env = gym.make(
+            'single-valve-v0',
+            reference = 0.1,
+            control_type = 'flowrate',
+            reward_type = 'abs')
 
-            n_before = 0
-            n_now = 0
-            env = Monitor(env, log_dir, allow_early_resets=True)
+        n_before = 0
+        n_now = 0
+        env = Monitor(env, log_dir, allow_early_resets=True)
 
-            #print("make learning model")
-            actor_batch_size = 256
-            model = PPO1(MlpPolicy, env, verbose=0, timesteps_per_actorbatch=actor_batch_size,
-                        gamma = gamma, clip_param=clip, entcoeff=entcoeff, optim_epochs=4,
-                        optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=3e-3,
-                        n_cpu_tf_sess = 1)
-            time_steps = 2e4
+        #print("make learning model")
+        actor_batch_size = 256
+        model = PPO1(MlpPolicy, env, verbose=0, timesteps_per_actorbatch=actor_batch_size,
+                    gamma = gamma, clip_param=clip, entcoeff=entcoeff, optim_epochs=4,
+                    optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=3e-3,
+                    n_cpu_tf_sess = 1)
+        time_steps = 2e4
 
-            model.learn(total_timesteps=int(time_steps), callback=callback)
+        model.learn(total_timesteps=int(time_steps), callback=callback)
 
-            xarr = np.array(xarr)
-            yarr = np.array(yarr)
-            y_smooth = gaussian_filter1d(yarr, sigma=2)
-            plt.plot(xarr, yarr, 'b.')
-            plt.plot(xarr, y_smooth, 'b-')
-            plt.title('$\epsilon$ = %.2f, ent = %.2f, $\gamma$ = %.2f, $\lambda$ = %.2f' % \
-                    (clip, entcoeff, gamma, lam,))
-            plt.xlabel('Learning Iterations')
-            plt.ylabel('Reward')
-            fig_name = ''.join([
-                'ppo_', control_type, '_', reward_type, '_',
-                '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
-            fig_name.replace('.', '-')
-            plt.savefig(fig_dir + fig_name, 'png')
-            plt.clf()
+        xarr = np.array(xarr)
+        yarr = np.array(yarr)
+        y_smooth = gaussian_filter1d(yarr, sigma=2)
+        plt.plot(xarr, yarr, 'b.')
+        plt.plot(xarr, y_smooth, 'b-')
+        plt.title('$\epsilon$ = %.2f, ent = %.2f, $\gamma$ = %.2f, $\lambda$ = %.2f' % \
+                (clip, entcoeff, gamma, lam,))
+        plt.xlabel('Learning Iterations')
+        plt.ylabel('Reward')
+        fig_name = ''.join([
+            'ppo_', control_type, '_', reward_type, '_',
+            '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
+        fig_name.replace('.', '-')
+        plt.savefig(fig_dir + fig_name, 'png')
+        plt.clf()
 
-            pi = get_pi(true_observations, true_actions, model)
-            save_ppo_results(fig_name + '.dat', clip, gamma, lam, entcoeff,
-                time_steps, xarr, yarr, true_observations, true_actions, pi)
+        pi = get_pi(true_observations, true_actions, model)
+        save_ppo_results(fig_name + '.dat', clip, gamma, lam, entcoeff,
+            time_steps, xarr, yarr, true_observations, true_actions, pi)
