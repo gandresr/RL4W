@@ -115,7 +115,6 @@ if __name__ == "__main__":
 
             #print("make learning model")
             actor_batch_size = 256
-            print(combinations[rank])
             model = PPO1(MlpPolicy, env, verbose=0, timesteps_per_actorbatch=actor_batch_size,
                         gamma = gamma, clip_param=clip, entcoeff=entcoeff, optim_epochs=4,
                         optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=3e-3,
