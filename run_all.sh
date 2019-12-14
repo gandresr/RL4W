@@ -1,1 +1,0 @@
-seq 12 | parallel -N0 --jobs 0 -a arguments.txt python ppo_main_results.py
