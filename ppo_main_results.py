@@ -101,7 +101,7 @@ if __name__ == "__main__":
         env = Monitor(env, log_dir, allow_early_resets=True)
 
         #print("make learning model")
-        actor_batch_size = 32
+        actor_batch_size = 256
         model = PPO1(MlpPolicy, env, verbose=0, timesteps_per_actorbatch=actor_batch_size,
                     gamma = gamma, clip_param=clip, entcoeff=entcoeff, optim_epochs=4,
                     optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=3e-3,

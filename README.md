@@ -2,10 +2,16 @@
 
 Reinforcement Learning project using Proximal Policy Optimization algorithm to solve simple water distribution system environment.
 
-## Required libraries
+## Required Environment
 
 * Stable Baseline with MPI support (for core PPO algorithm)
+```
+pip install stable-baselines[mpi]
+```
 * WNTR (for water distribution system simulation)
+```
+pip install wntr
+```
 * Gym (for making custom environment and registering the environment)
 
 ## Structure
@@ -21,10 +27,10 @@ Reinforcement Learning project using Proximal Policy Optimization algorithm to s
 
 ## How to run
 
-* Install all required libraries
+* Create the 'rl_water' environment
 * In model/ folder, run the following command. This registers custom water distribution environment to gym 
 ```
-pip install -e .
+cd model && pip install -e .
 ```
 * Run ppo scripts. Note that hyperparameter has to be changed within the script (scripts do not have any inputs) 
 
