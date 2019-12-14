@@ -123,7 +123,7 @@ if __name__ == "__main__":
             'ppo_', control_type, '_', reward_type, '_',
             '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
         fig_name.replace('.', '-')
-        plt.savefig(fig_dir + fig_name, 'png'))
+        plt.savefig(fig_dir + fig_name, 'png')
         plt.clf()
 
         pi = get_pi(true_observations, true_actions, model)
