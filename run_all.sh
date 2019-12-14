@@ -1,1 +1,1 @@
-mpiexec -n 12 python ppo_main_results.py
+python ppo_main_results.py
