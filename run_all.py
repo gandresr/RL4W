@@ -1,4 +1,5 @@
 from mpi4py import MPI
+import subprocess
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
