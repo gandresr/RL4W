@@ -1,18 +1,26 @@
 # Proximal Policy Optimization for Water Distribution Systems Management
 
-Reinforcement Learning project using Proximal Policy Optimization algorithm to solve simple water distribution system environment.
+Reinforcement Learning project using the Proximal Policy Optimization algorithm to control pressures and flows in a simple water distribution system environment.
 
-## Required Environment
+## Main Dependencies
 
-* Stable Baseline with MPI support (for core PPO algorithm)
-```
-pip install stable-baselines[mpi]
-```
-* WNTR (for water distribution system simulation)
+* WNTR (for water distribution systems simulation)
 ```
 pip install wntr
 ```
-* Gym (for making custom environment and registering the environment)
+* Tensorflow v1.14
+```
+pip install tensorflow==1.14
+```
+* Bleeding-edge version of Stable Baselines (for core PPO algorithm)
+```
+git clone https://github.com/hill-a/stable-baselines && cd stable-baselines
+pip install -e .[docs,tests]
+```
+* OpenAI Gym (contains the abstract classes for the water network environment)
+```
+pip install gym
+```
 
 ## Structure
 
