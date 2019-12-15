@@ -96,9 +96,9 @@ if __name__ == "__main__":
         #print("make environment")
         env = gym.make(
             'single-valve-v0',
-            reference = 0.1,
-            control_type = 'flowrate',
-            reward_type = 'abs')
+            reference = reference,
+            control_type = control_type,
+            reward_type = reward_type)
 
         n_before = 0
         n_now = 0

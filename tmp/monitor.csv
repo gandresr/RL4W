@@ -1,6 +1,2 @@
-<<<<<<< HEAD
-#{"t_start": 1576379072.8891292, "env_id": "single-valve-v0"}
-=======
-#{"t_start": 1576381054.9180098, "env_id": "single-valve-v0"}
->>>>>>> refs/remotes/origin/discrete_actions
+#{"t_start": 1576384851.671987, "env_id": "single-valve-v0"}
 r,l,t
