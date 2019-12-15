@@ -49,7 +49,7 @@ class WDSEnv(gym.Env):
         elif self.control_type == 'pressure':
             observation = np.array([float(results.node['pressure']['N3'])])
         if self.reward_type == 'gaussian':
-            reward = np.exp(-(self.reference - observation)**2/(reference/100))
+            reward = np.exp(-(self.reference - observation)**2/(self.reference/100))
         elif self.reward_type == 'abs':
             reward = float(-abs(self.reference - observation))
         elif self.reward_type == 'delta':
