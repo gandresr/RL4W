@@ -88,7 +88,7 @@ if __name__ == "__main__":
         fig_dir = ''.join(['main_results', os.sep, control_type, os.sep, reward_type, os.sep])
         fig_name = ''.join([
             'ppo_', control_type, '_', reward_type, '_',
-            '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.4f' % gamma, '_', '%.2f' % lam])
+            '%.2f' % clip, '_', '%.4f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
         fig_name = fig_name.replace('.', 'p')
         os.makedirs(log_dir, exist_ok=True)
         os.makedirs(fig_dir, exist_ok=True)
