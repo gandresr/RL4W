@@ -1,1 +1,1 @@
-python ppo_main_results.py
+taskset -c 0 python ppo_main_results.py flowrate abs 0.1
