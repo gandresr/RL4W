@@ -86,6 +86,10 @@ if __name__ == "__main__":
         #print("start")
         log_dir = "tmp/"
         fig_dir = ''.join(['main_results', os.sep, control_type, os.sep, reward_type])
+        fig_name = ''.join([
+            'ppo_', control_type, '_', reward_type, '_',
+            '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
+        fig_name = fig_name.replace('.', 'p')
         os.makedirs(log_dir, exist_ok=True)
         os.makedirs(fig_dir, exist_ok=True)
 
@@ -106,7 +110,7 @@ if __name__ == "__main__":
                     gamma = gamma, clip_param=clip, entcoeff=entcoeff, optim_epochs=4,
                     optim_batchsize=16, optim_stepsize=0.001, lam=lam, adam_epsilon=3e-3,
                     n_cpu_tf_sess = 1)
-        time_steps = 2e4
+        time_steps = 20e3
 
         model.learn(total_timesteps=int(time_steps), callback=callback)
 
@@ -119,13 +123,9 @@ if __name__ == "__main__":
                 (clip, entcoeff, gamma, lam,))
         plt.xlabel('Learning Iterations')
         plt.ylabel('Reward')
-        fig_name = ''.join([
-            'ppo_', control_type, '_', reward_type, '_',
-            '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
-        fig_name.replace('.', '-')
-        plt.savefig(fig_dir + fig_name, 'png')
+        plt.savefig(fig_dir + fig_name + '.png', format = 'png')
         plt.clf()
 
         pi = get_pi(true_observations, true_actions, model)
-        save_ppo_results(fig_name + '.dat', clip, gamma, lam, entcoeff,
+        save_ppo_results(fig_dir, fig_name, time_steps, clip, gamma, lam, entcoeff,
             time_steps, xarr, yarr, true_observations, true_actions, pi)
