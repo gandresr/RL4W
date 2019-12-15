@@ -88,7 +88,7 @@ if __name__ == "__main__":
         fig_dir = ''.join(['main_results', os.sep, control_type, os.sep, reward_type, os.sep])
         fig_name = ''.join([
             'ppo_', control_type, '_', reward_type, '_',
-            '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
+            '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.4f' % gamma, '_', '%.2f' % lam])
         fig_name = fig_name.replace('.', 'p')
         os.makedirs(log_dir, exist_ok=True)
         os.makedirs(fig_dir, exist_ok=True)
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         y_smooth = gaussian_filter1d(yarr, sigma=2)
         plt.plot(xarr, yarr, 'b.')
         plt.plot(xarr, y_smooth, 'b-')
-        plt.title('$\epsilon$ = %.2f, ent = %.2f, $\gamma$ = %.2f, $\lambda$ = %.2f' % \
+        plt.title('$\epsilon$ = %.2f, ent = %.4f, $\gamma$ = %.2f, $\lambda$ = %.2f' % \
                 (clip, entcoeff, gamma, lam,))
         plt.xlabel('Learning Iterations')
         plt.ylabel('Reward')
