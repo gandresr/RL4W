@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
         #print("start")
         log_dir = "tmp/"
-        fig_dir = ''.join(['main_results', os.sep, control_type, os.sep, reward_type])
+        fig_dir = ''.join(['main_results', os.sep, control_type, os.sep, reward_type, os.sep])
         fig_name = ''.join([
             'ppo_', control_type, '_', reward_type, '_',
             '%.2f' % clip, '_', '%.2f' % entcoeff, '_', '%.2f' % gamma, '_', '%.2f' % lam])
