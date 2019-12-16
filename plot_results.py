@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+import ntpath
 
 from collections import defaultdict as ddict
 from scipy.ndimage.filters import gaussian_filter1d
@@ -31,16 +32,16 @@ def plot3D(fpath):
     ax.plot_surface(X, Y, prob_space, rstride=1, cstride=1, cmap='viridis', edgecolor='none')
     plt.xlabel('State Space')
     plt.ylabel('Action Space')
-    plt.title('Probability distribution over state and action space')
-    plt.show()
+    plt.savefig('paper_figures/' + '3D_' + ntpath.basename(fpath).split('.')[0] + '.png', bbox_inches='tight')
+    plt.close()
 
 if __name__ == "__main__":
     # Plotting best hyperparameters
-    best_data = 'main_results/flowrate/delta/ppo_flowrate_delta_0p30_0p0100_0p99_0p95.dat'
-    # worst_data = 'main_results/flowrate/gaussian/ppo_flowrate_gaussian_0p30_0p0067_0p99_0p95.dat'
+    best_data = 'main_results/flowrate/gaussian/ppo_flowrate_gaussian_0p30_0p0100_0p99_0p95.dat'
+    worst_data = 'main_results/flowrate/gaussian/ppo_flowrate_gaussian_0p10_0p0100_0p99_0p95.dat'
     plot3D(best_data)
-    # plot3D(worst_data)
-    
+    plot3D(worst_data)
+
     matplotlib.rcParams.update({'font.size': 17})
     control_types = os.listdir('main_results')
     for control_type in control_types:
